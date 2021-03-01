@@ -73,14 +73,11 @@ def cpu_turn(available, board, player):
             for j in range(0, 3):
                 if board[i][j] == '':
                     board[i][j] = 'O'
-                    debug_board(board)
                     score = minimax(available, board, 0, False)
                     board[i][j] = ''
-                    print("Score: ", score, '\n')
                     if score > bestScore:
                         bestScore = score
                         move = [i, j]
-                        print(move)
 
         available.remove(move)
         board[move[0]][move[1]] = player
@@ -124,7 +121,6 @@ def minimax(available, board, depth, isMaximizing):
 def player_turn(board, pos, available):
     i = pos[0] // 100
     j = pos[1] // 100
-    print([i, j])
 
     available.remove([i, j])
     board[i][j] = 'X'
@@ -179,16 +175,12 @@ def main():
                 if not c_turn:  # checks if c_turn is False, meaning it's the player's turn
                     player_turn(board, event.pos, available)
                     c_turn = True  # allows cpu to make a move
-                print(str(event.pos[0]), str(event.pos[1]))
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    print(board)  # debug | press space to see the board in the console
-                elif event.key == pygame.K_r:  # press 'r' to restart
+                if event.key == pygame.K_r:  # press 'r' to restart
                     main()
                 elif event.key == pygame.K_q:  # press 'q' to quit program anytime
                     quit()
-                elif event.key == pygame.K_a: # press 'a' to view available list in the console
-                    print(available)
+
 
         # checks for winner
         if check_winner(board, available) != 'none':
